@@ -1,43 +1,43 @@
 <!-- Tabs -->
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation" *ngIf="!options.hideMinutesTab" [ngClass]="{'active': activeTab === 'minutes'}">
-        <a aria-controls="minutes" role="tab" data-toggle="tab" (click)="setActiveTab('minutes')" [ngClass]="{'active': activeTab === 'minutes'}">
+        <a aria-controls="minutes" class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('minutes')" [ngClass]="{'active': activeTab === 'minutes'}">
             Minutely
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideHourlyTab" [ngClass]="{'active': activeTab === 'hourly'}">
-        <a aria-controls="hourly" role="tab" data-toggle="tab" (click)="setActiveTab('hourly')" [ngClass]="{'active': activeTab === 'hourly'}">
+        <a aria-controls="hourly"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('hourly')" [ngClass]="{'active': activeTab === 'hourly'}">
             Hourly
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideDailyTab" [ngClass]="{'active': activeTab === 'daily'}">
-        <a aria-controls="daily" role="tab" data-toggle="tab" (click)="setActiveTab('daily')" [ngClass]="{'active': activeTab === 'daily'}">
+        <a aria-controls="daily"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('daily')" [ngClass]="{'active': activeTab === 'daily'}">
             Daily
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideWeeklyTab" [ngClass]="{'active': activeTab === 'weekly'}">
-        <a aria-controls="weekly" role="tab" data-toggle="tab" (click)="setActiveTab('weekly')" [ngClass]="{'active': activeTab === 'weekly'}">
+        <a aria-controls="weekly"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('weekly')" [ngClass]="{'active': activeTab === 'weekly'}">
             Weekly
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideMonthlyTab" [ngClass]="{'active': activeTab === 'monthly'}">
-        <a aria-controls="monthly" role="tab" data-toggle="tab" (click)="setActiveTab('monthly')" [ngClass]="{'active': activeTab === 'monthly'}">
+        <a aria-controls="monthly"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('monthly')" [ngClass]="{'active': activeTab === 'monthly'}">
             Monthly
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
-        <a aria-controls="yearly" role="tab" data-toggle="tab" (click)="setActiveTab('yearly')" [ngClass]="{'active': activeTab === 'yearly'}">
+        <a aria-controls="yearly"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('yearly')" [ngClass]="{'active': activeTab === 'yearly'}">
             Yearly
         </a>
     </li>
 
     <li class="nav-item" role="presentation" *ngIf="!options.hideAdvancedTab" [ngClass]="{'active': activeTab === 'advanced'}">
-        <a aria-controls="advanced" role="tab" data-toggle="tab" (click)="setActiveTab('advanced')" [ngClass]="{'active': activeTab === 'advanced'}">
+        <a aria-controls="advanced"  class="nav-link" role="tab" data-toggle="tab" (click)="setActiveTab('advanced')" [ngClass]="{'active': activeTab === 'advanced'}">
             Advanced
         </a>
     </li>
