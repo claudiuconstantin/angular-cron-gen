@@ -1,4 +1,4 @@
-.tab-pane .well,
+.tab-pane .well, 
 .tab-pane .card {
     margin-top: 10px;
 }
@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 
-.tab-pane label {
-    display: inline;
-    font-weight: inherit;
+label {
+  display: inline;
+  font-weight: inherit;
 }
