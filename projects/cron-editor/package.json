@@ -6,7 +6,7 @@
     "email": "claudiu@fastmail.com",
     "url": "https://claudiuconstantin.com"
   },
-  "version": "2.1.7",
+  "version": "3.1.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
     "cron",
     "cron-expression",
     "angular-cli",
-    "quartz"
+    "quartz",
+    "ncrontab"
   ],
   "peerDependencies": {
     "@angular/common": "~7.1.1",

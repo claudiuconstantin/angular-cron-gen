@@ -1,0 +1,222 @@
+<div class="form-inline">
+  <div class="form-group">Repeat every</div>
+
+  <div class="form-group" *ngIf="repeatType !== 'weeks'">
+    <select class="minutes form-control-sm form-control input-sm" (change)="onEveryChange()"
+            [ngClass]="options.formSelectClass">
+      <option *ngFor="let everyValue of currentOptions" [ngValue]="everyValue" [selected]='every==everyValue'>
+        {{everyValue}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control-sm form-control input-sm"
+            [(ngModel)]="repeatType"
+            (ngModelChange)="onTypeChange($event)">
+      <option *ngFor="let type of types" [ngValue]="type">
+        {{l(type)}}
+      </option>
+    </select>
+  </div>
+  
+  <ng-container *ngIf="repeatType === 'hours'">
+    <div class="form-group">{{l('onMinute')}}</div>
+    <div class="form-group">
+      <select class="form-control-sm form-control input-sm"
+              [disabled]="disabled || repeatType !== 'hours'"
+              (change)="onTimeChange()"
+              [(ngModel)]="time.minutes">
+        <option *ngFor="let minute of selectOptions.fullMinutes" [ngValue]="minute">{{minute}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="!options.hideSeconds">{{l('andSecond')}}</div>
+    <div class="form-group">
+      <select class="form-control-sm form-control input-sm"
+              *ngIf="!options.hideSeconds"
+              [disabled]="disabled || repeatType !== 'hours'"
+              (change)="onTimeChange()"
+              [(ngModel)]="time.seconds">
+        <option *ngFor="let second of selectOptions.seconds" [ngValue]="second">{{second}}</option>
+      </select>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="repeatType === 'days'">
+    <div class="form-group">{{l('at')}}</div>
+    <div class="form-group">
+      <cron-time-picker [disabled]="disabled || repeatType !== 'days'"
+                        (change)="onTimeChange()"
+                        [(time)]="time"
+                        [use24HourTime]="options.use24HourTime"
+                        [hideSeconds]="options.hideSeconds">
+      </cron-time-picker>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="repeatType === 'weeks'">
+    <div class="form-group">{{l('on')}}</div>
+
+    <div class="form-group">
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.MON" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklyMon">
+        <label class="form-check-label" for="weeklyMon">{{l('monday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.TUE" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklyTue">
+        <label class="form-check-label" for="weeklyTue">{{l('tuesday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.WED" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklyWed">
+        <label class="form-check-label" for="weeklyWed">{{l('wednesday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.THU" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklyThu">
+        <label class="form-check-label" for="weeklyThu">{{l('thursday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.FRI" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklyFri">
+        <label class="form-check-label" for="weeklyFri">{{l('friday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.SAT" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklySat">
+        <label class="form-check-label" for="weeklySat">{{l('saturday')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onDaysOfWeek.SUN" [disabled]="disabled || repeatType !== 'weeks'" (change)="onDaysOfWeekChange()" type="checkbox" id="weeklySun">
+        <label class="form-check-label" for="weeklySun">{{l('sunday')}}</label>
+      </div>
+    </div>
+
+    <div class="form-group">{{l('at')}}</div>
+
+    <div class="form-group">
+      <cron-time-picker [disabled]="disabled || repeatType !== 'weeks'"
+                        (change)="onTimeChange()"
+                        [(time)]="time"
+                        [use24HourTime]="options.use24HourTime"
+                        [hideSeconds]="options.hideSeconds">
+      </cron-time-picker>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="repeatType === 'months'">
+    <div class="form-group">{{l('onThe')}}</div>
+    <div class="form-group">
+      <select class="form-control-sm form-control input-sm"
+              [disabled]="disabled || repeatType !== 'months'"
+              (change)="onDayOfMonthChange()"
+              [(ngModel)]="onDayOfMonth"
+              [ngClass]="options.formSelectClass">
+
+        <option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts" [ngValue]="monthDaysWithLast">{{monthDayDisplay(monthDaysWithLast)}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">{{l('at')}}</div>
+    <div class="form-group">
+      <cron-time-picker [disabled]="disabled || repeatType !== 'months'"
+                        (change)="onTimeChange()"
+                        [(time)]="time"
+                        [use24HourTime]="options.use24HourTime"
+                        [hideSeconds]="options.hideSeconds">
+      </cron-time-picker>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="repeatType === 'years'">
+    <div class="form-group">
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.JAN" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyJan">
+        <label class="form-check-label" for="yearlyJan">{{l('january')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.FEB" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyTue">
+        <label class="form-check-label" for="yearlyTue">{{l('february')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.MAR" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyMar">
+        <label class="form-check-label" for="yearlyMar">{{l('march')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.APR" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyApr">
+        <label class="form-check-label" for="yearlyApr">{{l('april')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.MAY" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyMay">
+        <label class="form-check-label" for="yearlyMay">{{l('may')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.JUN" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyJun">
+        <label class="form-check-label" for="yearlyJun">{{l('june')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.JUL" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyJul">
+        <label class="form-check-label" for="yearlyJul">{{l('july')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.AUG" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyAug">
+        <label class="form-check-label" for="yearlyAug">{{l('august')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.SEP" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlySep">
+        <label class="form-check-label" for="yearlySep">{{l('september')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.OCT" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyOct">
+        <label class="form-check-label" for="yearlyOct">{{l('october')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.NOV" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyNov">
+        <label class="form-check-label" for="yearlyNov">{{l('november')}}</label>
+      </div>
+
+      <div class="form-check form-check-inline checkbox-inline">
+        <input class="form-check-input" [(ngModel)]="onMonthsInYear.DEC" [disabled]="disabled || repeatType !== 'years'" (change)="onMonthsInYearChange()" type="checkbox" id="yearlyDec">
+        <label class="form-check-label" for="yearlyDec">{{l('december')}}</label>
+      </div>
+    </div>
+
+    <div class="form-group">{{l('onThe')}}</div>
+    <div class="form-group">
+      <select class="form-control-sm form-control input-sm"
+              [disabled]="disabled || repeatType !== 'years'"
+              (change)="onDayOfMonthChange()"
+              [(ngModel)]="onDayOfMonth"
+              [ngClass]="options.formSelectClass">
+
+        <option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts" [ngValue]="monthDaysWithLast">{{monthDayDisplay(monthDaysWithLast)}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">{{l('at')}}</div>
+    <div class="form-group">
+      <cron-time-picker [disabled]="disabled || repeatType !== 'years'"
+                        (change)="onTimeChange()"
+                        [(time)]="time"
+                        [use24HourTime]="options.use24HourTime"
+                        [hideSeconds]="options.hideSeconds">
+      </cron-time-picker>
+    </div>
+  </ng-container>
+</div>
+
+<div class="row" *ngIf="!validation.isValid">
+  <div class="col col-md-12"><code>{{validation.errorMessage}}</code></div>
+</div>
+
