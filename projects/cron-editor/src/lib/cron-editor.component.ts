@@ -19,6 +19,26 @@ export class CronEditorComponent implements OnInit, OnChanges {
     this.cronChange.emit(this.localCron);
   }
 
+  private defaultOptions: CronOptions = {
+    formInputClass: '',
+    formSelectClass: '',
+    formRadioClass: '',
+    formCheckboxClass: '',
+    defaultTime: '00:00:00',
+    use24HourTime: true,
+    hideMinutesTab: false,
+    hideHourlyTab: false,
+    hideDailyTab: false,
+    hideWeeklyTab: false,
+    hideMonthlyTab: false,
+    hideYearlyTab: false,
+    hideAdvancedTab: false,
+    hideSeconds: true,
+    removeSeconds: true,
+    removeYears: true,
+    localizations: Localizations.English
+  };
+
   @Input() get options(): CronOptions { return this.localOptions; }
   set options(value: CronOptions) {
     this.localOptions = Object.assign(this.defaultOptions, value);
@@ -535,24 +555,4 @@ export class CronEditorComponent implements OnInit, OnChanges {
       hourTypes: ['AM', 'PM']
     };
   }
-
-  private defaultOptions : CronOptions = {
-    formInputClass: '',
-    formSelectClass: '',
-    formRadioClass: '',
-    formCheckboxClass: '',
-    defaultTime: '00:00:00',
-    use24HourTime: true,
-    hideMinutesTab: false,
-    hideHourlyTab: false,
-    hideDailyTab: false,
-    hideWeeklyTab: false,
-    hideMonthlyTab: false,
-    hideYearlyTab: false,
-    hideAdvancedTab: false,
-    hideSeconds: true,
-    removeSeconds: true,
-    removeYears: true,
-    localizations: Localizations.English
-  };
 }
