@@ -193,6 +193,85 @@
                         </cron-time-picker>&nbsp;
                         <label class="advanced-cron-editor-label"><input type="checkbox" [disabled]="disabled || activeTab !== 'monthly' || state.monthly.subTab !== 'specificDay'" 
                             (change)="regenerateCron()" [(ngModel)]="state.monthly.runOnWeekday" [ngClass]="options.formCheckboxClass"> during the nearest weekday</label>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.JAN" [ngClass]="options.formCheckboxClass"
+                                > Janurary</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.FEB" [ngClass]="options.formCheckboxClass"
+                                > Feburary</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.MAR" [ngClass]="options.formCheckboxClass"
+                                > March</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.APR" [ngClass]="options.formCheckboxClass"
+                                > April</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.MAY" [ngClass]="options.formCheckboxClass"
+                                > May</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.JUN" [ngClass]="options.formCheckboxClass"
+                                > June</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.JUL" [ngClass]="options.formCheckboxClass"
+                                > July</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.AUG" [ngClass]="options.formCheckboxClass"
+                                > August</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.SEP" [ngClass]="options.formCheckboxClass"
+                                > September</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.OCT" [ngClass]="options.formCheckboxClass"
+                                > October</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.NOV" [ngClass]="options.formCheckboxClass"
+                                > November</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="disabled || activeTab !== 'monthly' || state.monthly.specificDay.months !== 'selected'" 
+                                    (change)="regenerateCron()" [(ngModel)]="state.monthly.DEC" [ngClass]="options.formCheckboxClass"
+                                > December</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-3">
+                                <label class="advanced-cron-editor-label"><input type="checkbox" 
+                                    [disabled]="true" [ngModel]="allMonthsSelected()" [ngClass]="options.formCheckboxClass"
+                                > All Months</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="well well-small">
                         <input type="radio" name="monthly-radio" value="specificWeekDay" [disabled]="disabled" (change)="regenerateCron()"

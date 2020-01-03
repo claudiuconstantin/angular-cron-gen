@@ -77,6 +77,10 @@ export class CronEditorComponent implements OnInit, OnChanges {
     }
   }
 
+  public allMonthsSelected(): boolean {
+    return !this.selectOptions.monthNames.find( month => this.state.monthly[month] )
+  }
+
   public regenerateCron() {
     this.isDirty = true;
 
@@ -151,8 +155,21 @@ export class CronEditorComponent implements OnInit, OnChanges {
         switch (this.state.monthly.subTab) {
           case 'specificDay':
             const day = this.state.monthly.runOnWeekday ? `${this.state.monthly.specificDay.day}W` : this.state.monthly.specificDay.day;
+            let months = "";
+            if( this.state.monthly.specificDay.months === 'selected' ) {
+              months = this.selectOptions.monthNames
+                .reduce((acc, month) => this.state.monthly[month] ? acc.concat([month]) : acc, [])
+                .join(',');
+
+              if( months.length === 0 ) {
+                months = "*";
+              }
+            } else {
+              months = `1/${this.state.monthly.specificDay.months}`;
+            } 
+
             // tslint:disable-next-line:max-line-length
-            this.cron = `${this.state.monthly.specificDay.minutes} ${this.hourToCron(this.state.monthly.specificDay.hours, this.state.monthly.specificDay.hourType)} ${day} 1/${this.state.monthly.specificDay.months} ?`;
+            this.cron = `${this.state.monthly.specificDay.minutes} ${this.hourToCron(this.state.monthly.specificDay.hours, this.state.monthly.specificDay.hourType)} ${day} ${months} ?`;
 
             if (!this.options.removeSeconds) {
               this.cron = `${this.state.monthly.specificDay.seconds} ${this.cron}`;
@@ -294,7 +311,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
       this.state.weekly.hourType = this.getHourType(parsedHours);
       this.state.weekly.minutes = Number(minutes);
       this.state.weekly.seconds = Number(seconds);
-    } else if (cronSeven.match(/\d+ \d+ \d+ (\d+|L|LW|1W) 1\/\d+ \? \*/)) {
+    } else if (cronSeven.match(/\d+ \d+ \d+ (\d+|L|LW|1W) ((1\/\d+)|((JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(,(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))*)|\*) \? \*/)) {
       this.activeTab = 'monthly';
       this.state.monthly.subTab = 'specificDay';
 
@@ -305,7 +322,12 @@ export class CronEditorComponent implements OnInit, OnChanges {
         this.state.monthly.specificDay.day = dayOfMonth;
       }
 
-      this.state.monthly.specificDay.months = Number(month.substring(2));
+      const firstChar = month.charAt(0);
+      this.state.monthly.specificDay.months = ( firstChar === '*' || isNaN(Number(firstChar)) ) ? this.selectOptions.months[0] : Number(month.substring(2));
+      this.selectOptions.monthNames.forEach(month => this.state.monthly[month] = false);
+      if( this.state.monthly.specificDay.months === this.selectOptions.months[0] ) {
+        month.split(',').forEach(month => this.state.monthly[month] = true);
+      }
       const parsedHours = Number(hours);
       this.state.monthly.specificDay.hours = this.getAmPmHour(parsedHours);
       this.state.monthly.specificDay.hourType = this.getHourType(parsedHours);
@@ -457,6 +479,18 @@ export class CronEditorComponent implements OnInit, OnChanges {
       monthly: {
         subTab: 'specificDay',
         runOnWeekday: false,
+        JAN: false,
+        FEB: false,
+        MAR: false,
+        APR: false,
+        MAY: false,
+        JUN: false,
+        JUL: false,
+        AUG: false,
+        SEP: false,
+        OCT: false,
+        NOV: false,
+        DEC: false,
         specificDay: {
           day: '1',
           months: 1,
@@ -530,9 +564,10 @@ export class CronEditorComponent implements OnInit, OnChanges {
 
   private getSelectOptions() {
     return {
-      months: Utils.getRange(1, 12),
+      months: ['selected', ...Utils.getRange(1, 12)],
       monthWeeks: ['#1', '#2', '#3', '#4', '#5', 'L'],
       days: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      monthNames: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       minutes: Utils.getRange(0, 59),
       fullMinutes: Utils.getRange(0, 59),
       seconds: Utils.getRange(0, 59),
