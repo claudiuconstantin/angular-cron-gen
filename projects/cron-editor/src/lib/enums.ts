@@ -1,20 +1,20 @@
 export const Days = {
-    'SUN': 'Sunday',
-    'MON': 'Monday',
-    'TUE': 'Tuesday',
-    'WED': 'Wednesday',
-    'THU': 'Thursday',
-    'FRI': 'Friday',
-    'SAT': 'Saturday'
+    'SUN': 'sunday',
+    'MON': 'monday',
+    'TUE': 'tuesday',
+    'WED': 'wednesday',
+    'THU': 'thursday',
+    'FRI': 'friday',
+    'SAT': 'saturday'
 };
 
 export const MonthWeeks = {
-    '#1': 'First',
-    '#2': 'Second',
-    '#3': 'Third',
-    '#4': 'Fourth',
-    '#5': 'Fifth',
-    'L': 'Last'
+    '#1': 'first',
+    '#2': 'second',
+    '#3': 'third',
+    '#4': 'fourth',
+    '#5': 'fifth',
+    'L': 'last'
 };
 
 export enum Months {

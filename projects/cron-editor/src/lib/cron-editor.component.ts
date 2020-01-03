@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { CronOptions } from './CronOptions';
+import { Localizations } from './Localizations';
 
 import { Days, MonthWeeks, Months } from './enums';
 import Utils from './Utils';
@@ -11,12 +12,36 @@ import Utils from './Utils';
 })
 export class CronEditorComponent implements OnInit, OnChanges {
   @Input() public disabled: boolean;
-  @Input() public options: CronOptions;
 
   @Input() get cron(): string { return this.localCron; }
   set cron(value: string) {
     this.localCron = value;
     this.cronChange.emit(this.localCron);
+  }
+
+  private defaultOptions: CronOptions = {
+    formInputClass: '',
+    formSelectClass: '',
+    formRadioClass: '',
+    formCheckboxClass: '',
+    defaultTime: '00:00:00',
+    use24HourTime: true,
+    hideMinutesTab: false,
+    hideHourlyTab: false,
+    hideDailyTab: false,
+    hideWeeklyTab: false,
+    hideMonthlyTab: false,
+    hideYearlyTab: false,
+    hideAdvancedTab: false,
+    hideSeconds: true,
+    removeSeconds: true,
+    removeYears: true,
+    localizations: Localizations.English
+  };
+
+  @Input() get options(): CronOptions { return this.localOptions; }
+  set options(value: CronOptions) {
+    this.localOptions = Object.assign(this.defaultOptions, value);
   }
 
   // the name is an Angular convention, @Input variable name + "Change" suffix
@@ -27,6 +52,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
   public state: any;
 
   private localCron: string;
+  private localOptions: CronOptions;
   private isDirty: boolean;
 
   public ngOnInit() {
@@ -54,26 +80,26 @@ export class CronEditorComponent implements OnInit, OnChanges {
   }
 
   public dayDisplay(day: string): string {
-    return Days[day];
+    return this.l(Days[day]);
   }
 
   public monthWeekDisplay(monthWeekNumber: number): string {
-    return MonthWeeks[monthWeekNumber];
+    return this.l(MonthWeeks[monthWeekNumber]);
   }
 
   public monthDisplay(month: number): string {
-    return Months[month];
+    return this.l(Months[month].toLowerCase());
   }
 
   public monthDayDisplay(month: string): string {
     if (month === 'L') {
-      return 'Last Day';
+      return this.l('lastDay');
     } else if (month === 'LW') {
-      return 'Last Weekday';
+      return this.l('lastWeekday');
     } else if (month === '1W') {
-      return 'First Weekday';
+      return this.l('firstWeekday');
     } else {
-      return `${month}${this.getOrdinalSuffix(month)} day`;
+      return `${month}${this.getOrdinalSuffix(month)} ${this.l('day')}`;
     }
   }
 
@@ -217,6 +243,11 @@ export class CronEditorComponent implements OnInit, OnChanges {
         throw new Error('Invalid cron active tab selection');
     }
   }
+
+  public l(localizationKey: string): string {
+    return this.options.localizations[localizationKey];
+  }
+
 
   private getAmPmHour(hour: number) {
     return this.options.use24HourTime ? hour : (hour + 11) % 12 + 1;
@@ -371,7 +402,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
     this.state.validation.errorMessage = '';
 
     if (!cron) {
-      this.state.validation.errorMessage = 'Cron expression cannot be null';
+      this.state.validation.errorMessage = this.l('cronExpressionCannotBeNull');
       return;
     }
 
@@ -388,7 +419,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
     }
 
     if (cronParts.length !== expected) {
-      this.state.validation.errorMessage = `Invalid cron expression, there must be ${expected} segments`;
+      this.state.validation.errorMessage = this.l('invalidCronExpression').replace('{expected}', `${expected}`);
       return;
     }
 
@@ -508,24 +539,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
   }
 
   private getOrdinalSuffix(value: string) {
-    if (value.length > 1) {
-      const secondToLastDigit = value.charAt(value.length - 2);
-      if (secondToLastDigit === '1') {
-        return 'th';
-      }
-    }
-
-    const lastDigit = value.charAt(value.length - 1);
-    switch (lastDigit) {
-      case '1':
-        return 'st';
-      case '2':
-        return 'nd';
-      case '3':
-        return 'rd';
-      default:
-        return 'th';
-    }
+    return this.localOptions.localizations.ordinalSuffix(value);
   }
 
   private getSelectOptions() {
