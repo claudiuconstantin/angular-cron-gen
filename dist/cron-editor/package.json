@@ -26,5 +26,18 @@
   "peerDependencies": {
     "@angular/common": "~7.1.1",
     "@angular/core": "^7.1.1"
+  },
+  "main": "bundles/cron-editor.umd.js",
+  "module": "fesm5/cron-editor.js",
+  "es2015": "fesm2015/cron-editor.js",
+  "esm5": "esm5/cron-editor.js",
+  "esm2015": "esm2015/cron-editor.js",
+  "fesm5": "fesm5/cron-editor.js",
+  "fesm2015": "fesm2015/cron-editor.js",
+  "typings": "cron-editor.d.ts",
+  "metadata": "cron-editor.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
   }
 }
