@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
+// import { CronEditorModule } from 'projects/cron-editor/src/lib/cron-editor.module';
 import { CronEditorModule } from 'cron-editor';
 
 @NgModule({

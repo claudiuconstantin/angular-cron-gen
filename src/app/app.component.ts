@@ -20,6 +20,7 @@ export class AppComponent {
     defaultTime: '10:00:00',
     use24HourTime: true,
 
+    hideOneTimeTab: false,
     hideMinutesTab: false,
     hideHourlyTab: false,
     hideDailyTab: false,

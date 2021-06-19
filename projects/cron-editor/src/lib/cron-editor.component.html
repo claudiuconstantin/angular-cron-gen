@@ -1,5 +1,11 @@
 <!-- Tabs -->
 <ul class="nav nav-tabs tab-nav" role="tablist">
+    <li [ngClass]="{'active': activeTab === 'onetime'}" *ngIf="!options.hideOneTimeTab">
+      <a aria-controls="onetime" role="tab" data-toggle="tab" (click)="setActiveTab('onetime')">
+          One Time
+      </a>
+    </li>
+
     <li [ngClass]="{'active': activeTab === 'minutes'}" *ngIf="!options.hideMinutesTab">
         <a aria-controls="minutes" role="tab" data-toggle="tab" (click)="setActiveTab('minutes')">
             Minutes
@@ -48,6 +54,14 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="tab-content">
+                <!-- One Time -->
+                <div class="tab-pane" *ngIf="!options.hideOneTimeTab" [ngClass]="{'active': activeTab === 'onetime'}">
+                  <div class="well well-small">
+                    <input type="datetime-local" id="datetime" name="datetime" [(ngModel)]="state.datetime"
+                    (change)="regenerateCron()">
+                  </div>
+                </div>
+
                 <!-- Minutes-->
                 <div class="tab-pane" *ngIf="!options.hideMinutesTab" [ngClass]="{'active': activeTab === 'minutes'}">
                     <div class="well well-small">
@@ -191,7 +205,7 @@
                             (change)="regenerateCron()" [(time)]="state.monthly.specificDay" [selectClass]="options.formSelectClass"
                             [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds">
                         </cron-time-picker>&nbsp;
-                        <label class="advanced-cron-editor-label"><input type="checkbox" [disabled]="disabled || activeTab !== 'monthly' || state.monthly.subTab !== 'specificDay'" 
+                        <label class="advanced-cron-editor-label"><input type="checkbox" [disabled]="disabled || activeTab !== 'monthly' || state.monthly.subTab !== 'specificDay'"
                             (change)="regenerateCron()" [(ngModel)]="state.monthly.runOnWeekday" [ngClass]="options.formCheckboxClass"> during the nearest weekday</label>
                     </div>
                     <div class="well well-small">
@@ -222,7 +236,7 @@
                                 {{monthDisplay(month)}}
                             </option>
                         </select>
-                        
+
                         at
                         <cron-time-picker [disabled]="disabled || activeTab !== 'monthly' || state.monthly.subTab !== 'specificWeekDay'"
                             (change)="regenerateCron()" [(time)]="state.monthly.specificWeekDay" [selectClass]="options.formSelectClass"
@@ -295,7 +309,24 @@
             </div>
         </div>
     </div>
+
     <div class="row" *ngIf="!state.validation.isValid">
         <code>{{state.validation.errorMessage}}</code>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            The Resulting Cron Expression : {{cron}}
+          </div>
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right text-success" *ngIf="isValidExpression">
+            Valid Expression
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right text-danger blink" *ngIf="!isValidExpression">
+            Not a Valid Expression
+          </div> -->
+        </div>
+      </div>
     </div>
 </div>
