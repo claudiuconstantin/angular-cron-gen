@@ -7,6 +7,7 @@ export interface CronOptions {
     defaultTime: string;
     use24HourTime: boolean;
 
+    hideOneTimeTab: boolean;
     hideMinutesTab: boolean;
     hideHourlyTab: boolean;
     hideDailyTab: boolean;
