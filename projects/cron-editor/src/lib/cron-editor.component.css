@@ -88,3 +88,7 @@
 .text-right {
   text-align: right;
 }
+
+.cron-expression-margin {
+  margin-top: 10px
+}

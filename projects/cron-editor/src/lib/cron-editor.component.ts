@@ -87,7 +87,7 @@ export class CronEditorComponent implements OnInit, OnChanges {
 
     switch (this.activeTab) {
       case 'onetime':
-        this.cron = this.state.datetime;
+        this.generateOneTimeCron();
         break;
       case 'minutes':
         this.generateMinutesCron();
@@ -117,6 +117,21 @@ export class CronEditorComponent implements OnInit, OnChanges {
     if (this.activeTab && this.activeTab.toLowerCase() !== 'onetime') {
       this.isValidExpression = this.onValidateQuartzExpression(this.cron);
     }
+  }
+
+  private generateOneTimeCron() {
+    const selectedDateTime = new Date(this.state.datetime);
+    const date = selectedDateTime.getDate();
+    const month = selectedDateTime.getMonth() + 1;
+    const hour = selectedDateTime.getHours();
+    const minutes = selectedDateTime.getMinutes();
+    const parsedMonth = (month <= 9) ? '0' + month : month.toString();
+    const parsedDate = (date <= 9) ? '0' + date : date.toString();
+    const parsedHour = (hour <= 9) ? '0' + hour : hour.toString();
+    const parsedMinutes = (minutes <= 9) ? '0' + minutes : minutes.toString();
+
+    this.cron = parsedMinutes + ' ' + parsedHour + ' ' + parsedDate
+      + ' ' + parsedMonth + ' ? ' + selectedDateTime.getFullYear();
   }
 
   private generateMinutesCron() {
